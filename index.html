@@ -8,422 +8,854 @@
   <meta property="og:title" content="Телесный тренинг «Почему я соглашаюсь, когда не хочу»">
   <meta property="og:description" content="14 ноября, Тюмень. Закрытая группа до 10 человек. Ведущие: Аида Баймухаметова и Катерина Керен.">
   <meta property="og:type" content="website">
+  <meta name="theme-color" content="#211813">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f7f1ea;
-      --bg-alt: #efe5d9;
-      --card: #fffaf4;
-      --fg: #2d2621;
-      --muted: #6f625a;
-      --accent: #b0644a;
-      --accent-hover: #984f37;
-      --accent-soft: #ecd3c6;
-      --sage: #8a9a7e;
-      --line: #e2d5c7;
-      --radius: 22px;
-      --max: 1080px;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1c1815;
-        --bg-alt: #241f1b;
-        --card: #2a2420;
-        --fg: #f1e9e1;
-        --muted: #b6a89c;
-        --accent: #d9876b;
-        --accent-hover: #e69b81;
-        --accent-soft: #4a3329;
-        --sage: #a7b69a;
-        --line: #3a322c;
-      }
+      --ink: #211813;
+      --ink-2: #3b2519;
+      --clay: #8c5238;
+      --clay-2: #b0644a;
+      --coral: #e0896a;
+      --sand: #f4ebe1;
+      --sand-2: #ecdfd1;
+      --paper: #fbf6f0;
+      --text: #2d2621;
+      --muted: #76665b;
+      --light: #f3e8dd;
+      --light-muted: rgba(243, 232, 221, .62);
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Manrope", system-ui, sans-serif;
+      --max: 1120px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: "Manrope", system-ui, sans-serif;
-      font-size: 17px;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
+      background: var(--ink); color: var(--text);
+      font-family: var(--sans); font-size: 17px; line-height: 1.65;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
     }
-    h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
-    h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 28px; }
-    h3 { font-size: 1.55rem; margin-bottom: 8px; }
-    p + p { margin-top: 14px; }
+    /* лёгкое зерно поверх всей страницы — фактура вместо «цифровой» гладкости */
+    body::after {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.05; }
+    em { font-style: italic; }
     a { color: inherit; }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
-    section { padding: 88px 0; }
-    .alt { background: var(--bg-alt); }
-    .eyebrow {
-      display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
-    }
-    .lead { font-size: 1.15rem; color: var(--muted); max-width: 680px; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .kicker { font-size: .78rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
 
-    /* Buttons */
+    /* появление при прокрутке */
+    .reveal { opacity: 0; transform: translateY(28px); filter: blur(6px); transition: opacity 1s ease, transform 1s ease, filter 1s ease; }
+    .reveal.in { opacity: 1; transform: none; filter: none; }
+
+    /* кнопка */
     .btn {
-      display: inline-block; text-align: center;
-      background: var(--accent); color: #fff; text-decoration: none;
-      font-weight: 600; font-size: 1.05rem; padding: 18px 32px; border-radius: 999px;
-      border: none; cursor: pointer; transition: background .2s, transform .2s;
-      box-shadow: 0 10px 30px -12px var(--accent);
+      display: inline-block; text-align: center; text-decoration: none; cursor: pointer;
+      background: var(--clay-2); color: #fff; font-weight: 600; font-size: 1.05rem;
+      padding: 19px 36px; border-radius: 999px; border: none;
+      transition: background .25s, transform .25s, box-shadow .25s;
+      box-shadow: 0 14px 34px -14px rgba(176, 100, 74, .9);
     }
+    .btn:hover { background: var(--coral); transform: translateY(-2px); }
     .js-price { white-space: nowrap; }
-    .btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
-    .btn-ghost {
-      background: transparent; color: var(--fg); box-shadow: none;
-      border: 1.5px solid var(--line);
-    }
-    .btn-ghost:hover { background: var(--card); }
 
-    /* Hero */
-    .hero { padding: 40px 0 96px; position: relative; overflow: hidden; }
-    .hero::before, .hero::after {
-      content: ""; position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; z-index: 0;
+    /* ========== 1. НАПРЯЖЕНИЕ ========== */
+    .hero {
+      position: relative; min-height: 100svh; overflow: hidden;
+      background: radial-gradient(ellipse at 50% 60%, #2e211a 0%, var(--ink) 70%);
+      color: var(--light); display: flex; flex-direction: column;
     }
-    .hero::before { width: 420px; height: 420px; background: var(--accent-soft); top: -120px; right: -100px; }
-    .hero::after { width: 320px; height: 320px; background: color-mix(in srgb, var(--sage) 35%, transparent); bottom: -80px; left: -120px; }
-    .hero .wrap { position: relative; z-index: 1; }
-    .topbar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0 64px; font-size: .9rem; color: var(--muted); }
-    .topbar strong { color: var(--fg); font-family: "Cormorant Garamond", serif; font-size: 1.35rem; }
-    .hero h1 { font-size: clamp(2.6rem, 7.5vw, 5.4rem); max-width: 900px; }
-    .hero h1 em { font-style: italic; color: var(--accent); }
-    .hero .lead { margin-top: 24px; }
-    .facts { display: flex; flex-wrap: wrap; gap: 12px; margin: 36px 0 40px; }
-    .fact {
-      background: var(--card); border: 1px solid var(--line); border-radius: 999px;
-      padding: 10px 18px; font-size: .95rem; font-weight: 500;
+    .marquee { position: relative; z-index: 2; overflow: hidden; border-bottom: 1px solid rgba(243,232,221,.14); padding: 14px 0; }
+    .marquee-track { display: flex; width: max-content; animation: slide 40s linear infinite; }
+    .marquee-track span {
+      font-family: var(--serif); font-size: 1.3rem; white-space: nowrap;
+      padding-right: 44px; display: inline-flex; align-items: center; gap: 44px;
     }
-    .fact b { color: var(--accent); font-weight: 700; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-    .seats { font-size: .95rem; color: var(--muted); }
-    .seats b { color: var(--fg); }
+    .marquee-track span::after { content: "✦"; color: var(--coral); font-size: .75em; }
+    @keyframes slide { to { transform: translateX(-50%); } }
 
-    /* Pain points */
-    .pains { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+    /* стена из автоматических «да» */
+    .yes-wall {
+      position: absolute; inset: -10% -20%; z-index: 0; pointer-events: none;
+      display: flex; flex-direction: column; justify-content: center; gap: .1em;
+      font-family: var(--serif); font-size: clamp(1.6rem, 3.4vw, 2.8rem); line-height: 1.05;
+      color: var(--light); opacity: .07; transform: rotate(-4deg);
+    }
+    .yes-wall div { white-space: nowrap; animation: slide 90s linear infinite; }
+    .yes-wall div:nth-child(even) { animation-direction: reverse; animation-duration: 110s; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: radial-gradient(ellipse 60% 55% at 35% 55%, var(--ink) 20%, transparent 80%);
+    }
+    .hero-photo {
+      position: absolute; z-index: 1; top: 0; right: 0; bottom: 0; width: 64%; pointer-events: none;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 42%), linear-gradient(to top, transparent 0%, #000 28%);
+      -webkit-mask-composite: source-in;
+      mask-image: linear-gradient(to right, transparent 0%, #000 42%), linear-gradient(to top, transparent 0%, #000 28%);
+      mask-composite: intersect;
+    }
+    .hero-photo img {
+      width: 100%; height: 100%; object-fit: cover; object-position: 10% 35%;
+      filter: grayscale(1) sepia(.45) brightness(.78) contrast(1.12);
+      animation: photo-breathe 12s ease-in-out infinite; transform-origin: 70% 40%;
+    }
+    @keyframes photo-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+    .hero-body { position: relative; z-index: 2; flex: 1; display: flex; align-items: center; padding: 72px 0 96px; }
+    .hero .kicker { color: var(--coral); margin-bottom: 28px; display: block; }
+    .hero h1 {
+      font-size: clamp(3rem, 9vw, 7.4rem); line-height: .9; letter-spacing: -.035em; max-width: 1000px;
+      animation: clench 6s ease-in-out infinite;
+      transform-origin: left center;
+    }
+    .hero h1 em { color: var(--coral); display: block; }
+    /* заголовок едва заметно «сжимается» — как плечи, которые напрягаются */
+    @keyframes clench { 0%, 100% { letter-spacing: -.035em; } 50% { letter-spacing: -.05em; } }
+    .hero .lead { margin-top: 32px; max-width: 560px; font-size: 1.12rem; color: var(--light-muted); }
+    .hero-meta { margin: 36px 0 40px; display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: .98rem; }
+    .hero-meta span { display: inline-flex; align-items: center; gap: 10px; }
+    .hero-meta span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+    .deadline { margin-top: 16px; font-size: .92rem; color: var(--light-muted); }
+    .deadline b { color: var(--light); font-weight: 600; }
+    .scroll-hint {
+      position: absolute; z-index: 2; bottom: 28px; left: 50%; transform: translateX(-50%);
+      font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--light-muted);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .scroll-hint::after { content: ""; width: 1px; height: 40px; background: linear-gradient(var(--light-muted), transparent); animation: drip 2.4s ease-in-out infinite; transform-origin: top; }
+    @keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+    /* боли — навязчивые мысли */
+    .pains { background: var(--ink); color: var(--light); padding: 120px 0 80px; }
+    .pains .kicker { color: var(--coral); margin-bottom: 64px; display: block; }
     .pain {
-      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-      padding: 28px; position: relative;
+      font-family: var(--serif); font-size: clamp(1.7rem, 3.6vw, 2.9rem); line-height: 1.12;
+      max-width: 820px; margin-bottom: 88px; letter-spacing: -.01em;
     }
-    .pain::before {
-      content: "“"; font-family: "Cormorant Garamond", serif; font-size: 4rem; line-height: 1;
-      color: var(--accent-soft); position: absolute; top: 10px; right: 20px;
-    }
-    .insight {
-      margin-top: 48px; padding: 40px; border-radius: var(--radius);
-      background: var(--fg); color: var(--bg);
-    }
-    .insight h3 { font-size: clamp(1.7rem, 3.5vw, 2.3rem); margin-bottom: 16px; }
-    .insight p { opacity: .85; }
-    .insight .final { opacity: 1; font-weight: 600; margin-top: 20px; }
+    .pain:nth-child(odd) { margin-left: auto; text-align: right; }
+    .pain em { color: var(--coral); }
+    .pain:last-child { margin-bottom: 0; }
 
-    /* Why body */
-    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
-    .checks { list-style: none; display: grid; gap: 14px; margin-top: 8px; }
-    .checks li {
-      background: var(--card); border: 1px solid var(--line); border-radius: 18px;
-      padding: 20px 22px 20px 60px; position: relative;
+    /* ========== 2. ОСОЗНАНИЕ: карта тела ========== */
+    .bodymap { position: relative; height: 340vh; background: linear-gradient(var(--ink), var(--ink-2)); color: var(--light); }
+    .bodymap-inner {
+      position: sticky; top: 0; height: 100svh;
+      display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px;
     }
-    .checks li::before {
-      content: ""; position: absolute; left: 22px; top: 24px; width: 22px; height: 22px; border-radius: 50%;
-      background: var(--sage);
-      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/16px no-repeat, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
+    .bodymap h2 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); letter-spacing: -.02em; }
+    .bodymap h2 em { color: var(--coral); }
+    .bodymap p { margin-top: 24px; color: var(--light-muted); max-width: 470px; }
+    .step-dots { display: flex; gap: 8px; margin-top: 32px; }
+    .step-dots i { width: 28px; height: 3px; border-radius: 2px; background: rgba(243,232,221,.2); transition: background .4s; }
+    .step-dots i.on { background: var(--coral); }
+    .figure { width: 100%; max-height: 86svh; }
+    .figure .body {
+      transform-box: view-box; transform-origin: 200px 580px;
+      filter: saturate(.85) brightness(.95);
+      animation: body-breathe 6s ease-in-out infinite;
+      transition: filter 1s ease;
+    }
+    .figure .aura { transition: opacity 1s ease; }
+    @keyframes body-breathe { 0%, 100% { transform: scale(1, 1); } 45% { transform: scale(1.012, 1.008); } }
+    /* в полном зажиме тело темнеет и чуть «сжимается», дыхание останавливается, тёплое свечение гаснет */
+    .figure.tense .body { animation: none; transform: scale(.985, 1); filter: saturate(.6) brightness(.7); }
+    .figure.tense .aura { opacity: 0; }
+    .figure .pt { opacity: 0; transition: opacity .6s; }
+    .figure .pt.on { opacity: 1; }
+    .figure .pt circle.core { fill: var(--light); }
+    .figure .pt circle.ring { fill: none; stroke: var(--light); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: pulse 2s ease-out infinite; }
+    @keyframes pulse { from { transform: scale(.6); opacity: 1; } to { transform: scale(2.6); opacity: 0; } }
+    .figure .pt line { stroke: var(--coral); stroke-opacity: .6; stroke-width: 1; }
+    .figure .pt text { fill: var(--light); font-family: var(--sans); font-size: 15px; }
+
+    /* ========== 3. ОПОРА ========== */
+    .practice { position: relative; background: linear-gradient(var(--ink-2), var(--clay) 85%); color: var(--light); padding: 120px 0 200px; }
+    .practice-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: start; }
+    .practice h2 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); letter-spacing: -.02em; }
+    .practice h2 em { color: #f6c2a8; }
+    .practice .kicker { color: #f6c2a8; display: block; margin-bottom: 24px; }
+    .practice .sub { margin-top: 28px; color: var(--light-muted); font-size: 1.08rem; max-width: 500px; }
+    .practice .intro { font-weight: 600; margin-bottom: 8px; }
+    .practice ol { list-style: none; counter-reset: p; }
+    .practice li {
+      counter-increment: p; display: grid; grid-template-columns: 56px 1fr; gap: 8px;
+      padding: 28px 0; border-bottom: 1px solid rgba(243,232,221,.2); font-size: 1.1rem;
+    }
+    .practice li::before { content: counter(p); font-family: var(--serif); font-style: italic; font-size: 2.2rem; line-height: 1; color: #f6c2a8; }
+    .wave { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 120px; display: block; }
+
+    .light { background: var(--sand); }
+    .light-2 { background: var(--sand-2); }
+    section.block { padding: 110px 0; }
+    .block .kicker { color: var(--clay-2); display: block; margin-bottom: 18px; }
+    .block h2 { font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: -.02em; max-width: 780px; }
+    .block h2 em { color: var(--clay-2); }
+
+    /* результат — путь от зажима к свободе */
+    .path { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 80px; }
+    .path-line { position: absolute; top: 0; left: 0; width: 100%; height: 60px; overflow: visible; }
+    .path-line path { fill: none; stroke: var(--clay-2); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.4s ease; }
+    .path.in .path-line path { stroke-dashoffset: 0; }
+    .step { position: relative; padding-top: 84px; }
+    .step::before {
+      content: ""; position: absolute; top: var(--y, 24px); left: 0; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--sand); border: 2px solid var(--clay-2);
+    }
+    .step:last-child::before { background: var(--clay-2); }
+    .step .num { font-family: var(--serif); font-style: italic; color: var(--clay-2); font-size: 1.1rem; }
+    .step h3 { font-size: 2rem; margin: 4px 0 12px; }
+    .step p { color: var(--muted); }
+
+    /* ведущие */
+    .hosts { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 72px; }
+    .host:nth-child(2) { margin-top: 140px; }
+    .blob {
+      aspect-ratio: 4 / 5; overflow: hidden; position: relative; max-width: 400px;
+      border-radius: 58% 42% 50% 50% / 46% 54% 46% 54%;
+      animation: breathe-shape 14s ease-in-out infinite;
+      display: grid; place-items: center;
+    }
+    .blob img {
+      width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%);
+      transform: scale(var(--zoom, 1)); transform-origin: var(--pos, 50% 50%);
+      filter: sepia(.18) saturate(.9);
+      transition: transform 1.2s ease;
+    }
+    .host:hover .blob img { transform: scale(calc(var(--zoom, 1) * 1.04)); }
+    .host:nth-child(1) .blob { background: var(--clay); }
+    .host:nth-child(2) .blob { background: #8a7058; animation-delay: -7s; }
+    /* тёплая вуаль снизу — фото «растворяется» в палитре сайта */
+    .blob::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(140,82,56,.35), transparent 45%); mix-blend-mode: multiply; }
+    .portrait { position: relative; max-width: 400px; }
+    .orbit {
+      position: absolute; width: 46%; right: -14%; bottom: -6%; overflow: visible;
+      animation: spin 30s linear infinite;
+    }
+    .host:nth-child(2) .orbit { right: auto; left: -14%; animation-direction: reverse; }
+    .orbit text { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; fill: var(--clay); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes breathe-shape {
+      0%, 100% { border-radius: 58% 42% 50% 50% / 46% 54% 46% 54%; }
+      50% { border-radius: 44% 56% 42% 58% / 56% 44% 56% 44%; }
+    }
+    .host h3 { font-size: clamp(2rem, 3.4vw, 2.8rem); margin-top: 32px; }
+    .host p { color: var(--muted); margin-top: 10px; max-width: 420px; }
+    .hosts-note {
+      font-family: var(--serif); font-style: italic; font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.25;
+      max-width: 820px; margin: 120px auto 0; text-align: center;
     }
 
-    /* Results */
-    .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; counter-reset: r; }
-    .result {
-      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px;
-      counter-increment: r;
+    /* для кого — интерактив */
+    .audience { margin-top: 56px; border-top: 1px solid rgba(45,38,33,.15); }
+    .aud {
+      width: 100%; display: flex; align-items: center; gap: 24px; text-align: left; cursor: pointer;
+      background: none; border: none; border-bottom: 1px solid rgba(45,38,33,.15);
+      padding: 28px 0; font-family: var(--serif); font-size: clamp(1.4rem, 2.8vw, 2.1rem); color: var(--text);
+      transition: color .3s;
     }
-    .result::before {
-      content: "0" counter(r); display: block; font-family: "Cormorant Garamond", serif;
-      font-size: 2.6rem; color: var(--accent); line-height: 1; margin-bottom: 16px;
+    .aud .box {
+      flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--clay-2);
+      display: grid; place-items: center; transition: background .3s;
     }
-    .result p { color: var(--muted); }
+    .aud .box svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 3; fill: none; opacity: 0; transition: opacity .3s; }
+    .aud:hover { color: var(--clay); }
+    .aud[aria-pressed="true"] .box { background: var(--clay-2); }
+    .aud[aria-pressed="true"] .box svg { opacity: 1; }
+    .aud-hint { margin-top: 20px; color: var(--muted); font-size: .95rem; }
+    .aud-result { max-height: 0; overflow: hidden; opacity: 0; transition: max-height .6s, opacity .6s, margin .6s; }
+    .aud-result.show { max-height: 300px; opacity: 1; margin-top: 40px; }
+    .aud-result p { font-family: var(--serif); font-size: 1.8rem; margin-bottom: 20px; }
 
-    /* Hosts */
-    .hosts { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-    .host {
-      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px;
-      display: flex; gap: 22px; align-items: flex-start;
+    /* цена — шкала */
+    .price-track { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 72px; }
+    .price-track::before { content: ""; position: absolute; top: 7px; left: 0; right: 0; height: 2px; background: rgba(45,38,33,.15); }
+    .tier { position: relative; padding-top: 40px; padding-right: 20px; }
+    .tier::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 16px; height: 16px; border-radius: 50%;
+      background: var(--sand); border: 2px solid rgba(45,38,33,.3);
     }
-    .avatar {
-      flex: 0 0 auto; width: 96px; height: 96px; border-radius: 50%;
-      display: grid; place-items: center; overflow: hidden;
-      font-family: "Cormorant Garamond", serif; font-size: 2.2rem; color: #fff;
-    }
-    .avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .host:nth-child(1) .avatar { background: var(--accent); }
-    .host:nth-child(2) .avatar { background: var(--sage); }
-    .host p { color: var(--muted); }
-    .hosts-note { text-align: center; margin-top: 36px; font-family: "Cormorant Garamond", serif; font-size: 1.6rem; font-style: italic; }
+    .tier .when { color: var(--muted); font-size: .95rem; }
+    .tier .amount { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.6rem); line-height: 1.1; margin-top: 6px; }
+    .tier.current::before { background: var(--clay-2); border-color: var(--clay-2); box-shadow: 0 0 0 8px rgba(176,100,74,.18); }
+    .tier.current .amount { color: var(--clay-2); }
+    .tier.current .when::after { content: " — сейчас"; color: var(--clay-2); font-weight: 600; }
+    .tier.past { opacity: .4; }
+    .tier.past .amount { text-decoration: line-through; text-decoration-thickness: 1px; }
+    .price-foot { margin-top: 56px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 36px; }
+    .price-foot p { color: var(--muted); max-width: 440px; }
+    .countdown { font-weight: 600; color: var(--text); }
 
-    /* Pricing */
-    .prices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 12px; }
-    .price {
-      background: var(--card); border: 1.5px solid var(--line); border-radius: var(--radius);
-      padding: 30px 26px; position: relative; transition: opacity .2s;
+    /* ========== 4. ВЫДОХ ========== */
+    .exhale {
+      background: radial-gradient(ellipse at 50% 45%, #fff 0%, var(--paper) 45%, var(--sand) 100%);
+      padding: 120px 0 140px; text-align: center; overflow: hidden;
     }
-    .price .when { font-size: .92rem; color: var(--muted); font-weight: 500; }
-    .price .amount { font-family: "Cormorant Garamond", serif; font-size: 2.8rem; font-weight: 600; margin-top: 8px; }
-    .price.current { border-color: var(--accent); box-shadow: 0 20px 40px -24px var(--accent); }
-    .price.current::after {
-      content: "Сейчас"; position: absolute; top: -13px; left: 24px;
-      background: var(--accent); color: #fff; font-size: .78rem; font-weight: 700;
-      padding: 4px 12px; border-radius: 999px; letter-spacing: .04em;
+    /* линия дыхания: вдох 4 с — волна поднимается, выдох 6 с — разглаживается */
+    .breath-line { display: block; width: 100%; height: clamp(160px, 18vw, 240px); margin: 8px 0 40px; overflow: visible; }
+    .breath-line path { fill: none; stroke: var(--clay-2); stroke-width: 1.5; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+    .breath-line path:nth-child(2) { stroke-opacity: .45; }
+    .breath-line path:nth-child(3) { stroke-opacity: .22; }
+    .breath-label { position: relative; font-family: var(--serif); font-style: italic; font-size: 1.5rem; color: var(--clay-2); height: 1.5em; }
+    .breath-label span { position: absolute; left: 50%; transform: translateX(-50%); animation: label-in 10s infinite; }
+    .breath-label span + span { animation-name: label-out; }
+    @keyframes label-in { 0%, 36% { opacity: 1; } 42%, 96% { opacity: 0; } 100% { opacity: 1; } }
+    @keyframes label-out { 0%, 38% { opacity: 0; } 44%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    .exhale h2 { font-size: clamp(3.4rem, 10vw, 7rem); letter-spacing: .02em; color: var(--text); }
+    .exhale .lead { font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); color: var(--muted); margin: 12px 0 44px; }
+
+    footer { background: var(--sand); color: var(--muted); font-size: .9rem; text-align: center; padding: 40px 24px 120px; border-top: 1px solid rgba(45,38,33,.1); }
+
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; margin-top: 18px; }
+    .footer-links a { color: var(--muted); text-decoration: underline; text-decoration-color: rgba(118,102,91,.35); text-underline-offset: 3px; }
+    .footer-links a:hover { color: var(--clay-2); }
+
+    /* ===== модальное окно записи ===== */
+    .modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s; }
+    .modal.open { opacity: 1; visibility: visible; }
+    .modal-overlay { position: absolute; inset: 0; background: rgba(33, 24, 19, .72); backdrop-filter: blur(6px); }
+    .modal-dialog {
+      position: relative; width: 100%; max-width: 480px; max-height: 92svh; overflow-y: auto;
+      background: var(--paper); border-radius: 28px; padding: 40px 36px 32px;
+      box-shadow: 0 30px 80px -20px rgba(33,24,19,.6);
+      transform: translateY(24px) scale(.97); transition: transform .4s ease;
     }
-    .price.past { opacity: .45; }
-    .price.past .amount { text-decoration: line-through; }
-    .price-note { margin-top: 22px; color: var(--muted); font-size: .95rem; }
-
-    /* Audience */
-    .audience { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .audience li {
-      padding: 22px 24px; border-radius: 18px; background: var(--card); border: 1px solid var(--line);
-      display: flex; gap: 14px; align-items: flex-start;
+    .modal.open .modal-dialog { transform: none; }
+    .modal-dialog .kicker { color: var(--clay-2); display: block; margin-bottom: 10px; }
+    .modal-dialog h2 { font-size: 2.4rem; letter-spacing: -.01em; }
+    .modal-sub { color: var(--muted); font-size: .95rem; margin: 6px 0 26px; }
+    .modal-close {
+      position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 50%;
+      border: none; background: none; font-size: 1.7rem; line-height: 1; color: var(--muted); cursor: pointer; transition: background .2s;
     }
-    .audience li::before { content: "—"; color: var(--accent); font-weight: 700; }
-
-    /* Final CTA */
-    .final-cta { text-align: center; }
-    .final-cta h2 { font-size: clamp(2.4rem, 6vw, 4rem); margin-bottom: 12px; }
-    .final-cta .lead { margin: 0 auto 36px; }
-    .seat-bar { max-width: 320px; height: 8px; border-radius: 99px; background: var(--line); margin: 22px auto 10px; overflow: hidden; }
-    .seat-bar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
-
-    footer { padding: 40px 0 120px; text-align: center; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
-
-    /* Sticky mobile CTA */
-    .sticky {
-      position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50;
-      display: none; transform: translateY(150%); transition: transform .3s;
+    .modal-close:hover { background: var(--sand-2); color: var(--text); }
+    .booking-form { display: grid; gap: 14px; }
+    .field { display: grid; gap: 6px; }
+    .field span { font-size: .82rem; font-weight: 600; color: var(--text); }
+    .field input {
+      width: 100%; padding: 14px 16px; font: inherit; font-size: 1rem; color: var(--text);
+      background: #fff; border: 1.5px solid rgba(45,38,33,.14); border-radius: 14px; transition: border-color .2s, box-shadow .2s;
     }
+    .field input::placeholder { color: rgba(118,102,91,.55); }
+    .field input:focus { outline: none; border-color: var(--clay-2); box-shadow: 0 0 0 4px rgba(176,100,74,.14); }
+    .booking-form.has-error input:invalid, .booking-form.has-error input:placeholder-shown { border-color: #c0563e; }
+    .field-error { color: #c0563e; font-size: .88rem; }
+    .modal-hint { margin: 24px 0 12px; font-size: .92rem; color: var(--muted); }
+    .messengers { display: grid; gap: 10px; }
+    .messenger {
+      display: flex; align-items: center; gap: 14px; padding: 12px 16px; text-decoration: none; cursor: pointer;
+      font-weight: 600; color: var(--text); background: #fff; border: 1.5px solid rgba(45,38,33,.12); border-radius: 16px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .messenger img { width: 36px; height: 36px; border-radius: 10px; object-fit: cover; }
+    .messenger:hover { border-color: var(--clay-2); transform: translateY(-1px); box-shadow: 0 8px 20px -12px rgba(176,100,74,.6); }
+    .modal-legal { margin-top: 18px; font-size: .78rem; line-height: 1.5; color: var(--muted); }
+    .modal-legal a { color: var(--clay-2); }
+
+    .toast {
+      position: fixed; left: 50%; bottom: 24px; z-index: 300; max-width: min(440px, calc(100vw - 32px));
+      padding: 14px 20px; border-radius: 16px; background: var(--ink); color: var(--light); font-size: .92rem; text-align: center;
+      box-shadow: 0 16px 40px -12px rgba(33,24,19,.6); opacity: 0; transform: translate(-50%, 16px); transition: opacity .3s, transform .3s;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    .sticky { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50; display: none; transform: translateY(150%); transition: transform .35s; }
     .sticky.show { transform: none; }
     .sticky .btn { width: 100%; }
 
-    @media (max-width: 820px) {
-      section { padding: 64px 0; }
-      .split, .hosts, .audience { grid-template-columns: 1fr; gap: 18px; }
-      .prices { grid-template-columns: 1fr; }
-      .host { flex-direction: column; }
-      .insight { padding: 28px; }
-      .topbar { padding-bottom: 40px; }
+    @media (max-width: 860px) {
+      section.block { padding: 80px 0; }
+      .pains { padding: 88px 0 64px; }
+      .pain { margin-bottom: 56px; }
+      .pain:nth-child(odd) { text-align: left; }
+      .bodymap { height: 320vh; }
+      .bodymap-inner { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 0; align-content: center; padding-top: 32px; }
+      .bodymap h2 { font-size: 1.9rem; }
+      .bodymap p { font-size: .95rem; margin-top: 12px; }
+      .step-dots { margin-top: 16px; }
+      .figure { max-height: 58svh; }
+      .practice { padding: 88px 0 150px; }
+      .practice-grid { grid-template-columns: 1fr; gap: 40px; }
+      .path { grid-template-columns: 1fr; gap: 0; margin-top: 48px; padding-left: 36px; border-left: 1.5px solid var(--clay-2); }
+      .path-line { display: none; }
+      .step { padding: 0 0 40px; }
+      .step::before { top: 6px !important; left: -44px; }
+      .hosts { grid-template-columns: 1fr; gap: 64px; }
+      .host:nth-child(2) { margin-top: 0; }
+      .portrait { max-width: 86%; }
+      .host:nth-child(2) .portrait { margin-left: auto; }
+      .orbit { width: 42%; right: -12%; }
+      .host:nth-child(2) .orbit { left: -12%; }
+      .hosts-note { margin-top: 72px; }
+      .price-track { grid-template-columns: 1fr; gap: 28px; padding-left: 36px; }
+      .price-track::before { top: 0; bottom: 0; left: 7px; right: auto; width: 2px; height: auto; }
+      .tier { padding-top: 0; }
+      .tier::before { left: -36px; top: 4px; }
+      .hero .btn, .price-foot .btn { width: 100%; }
       .sticky { display: block; }
-      .hero .btn { width: 100%; }
+      .scroll-hint { display: none; }
+      .modal { padding: 0; align-items: flex-end; }
+      .modal-dialog { border-radius: 28px 28px 0 0; padding: 32px 20px 24px; max-height: 94svh; }
+      .modal-dialog h2 { font-size: 2rem; padding-right: 36px; }
+      .hero-photo {
+        width: 100%; bottom: auto; height: 64svh;
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 45%);
+        mask-image: linear-gradient(to top, transparent 0%, #000 45%);
+      }
+      .hero-photo img { object-position: 47% 30%; transform-origin: 50% 35%; }
+      .hero-body { padding-top: 36svh; align-items: flex-end; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; filter: none; }
+      .bodymap { height: auto; }
+      .bodymap-inner { position: static; height: auto; padding: 100px 24px; }
+      .figure .pt { opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
+  <!-- ===== 1. НАПРЯЖЕНИЕ ===== -->
   <header class="hero">
-    <div class="wrap">
-      <div class="topbar">
-        <strong>Аида &amp; Катерина</strong>
-        <span>14 ноября · Тюмень</span>
-      </div>
-      <span class="eyebrow">Телесный тренинг</span>
-      <h1>Почему я соглашаюсь, <em>когда не хочу</em></h1>
-      <p class="lead">Однодневный тренинг о том, как перестать говорить «да» на автомате и вернуть себе право выбора — через тело, а не только через голову.</p>
-      <div class="facts">
-        <span class="fact"><b>14 ноября</b> · Тюмень</span>
-        <span class="fact">Группа <b>до 10 человек</b></span>
-        <span class="fact">Закрытый формат</span>
-      </div>
-      <div class="cta-row">
+    <div class="marquee" aria-label="14 ноября · Тюмень">
+      <div class="marquee-track" aria-hidden="true"></div>
+    </div>
+    <div class="yes-wall" aria-hidden="true"></div>
+    <!-- фото с тренинга: человек «прорывается» сквозь стену автоматических «да» -->
+    <div class="hero-photo" aria-hidden="true"><img src="img/main.jpg" alt=""></div>
+
+    <div class="hero-body">
+      <div class="wrap">
+        <span class="kicker">Телесный тренинг · Аида Баймухаметова и Катерина Керен</span>
+        <h1>Почему я соглашаюсь, <em>когда не хочу</em></h1>
+        <p class="lead">Один день, чтобы заметить своё автоматическое «да» — и научиться говорить «нет» без чувства вины. Через тело, а не только через голову.</p>
+        <div class="hero-meta">
+          <span>14 ноября, Тюмень</span>
+          <span>Группа до 10 человек</span>
+          <span>Закрытый формат</span>
+        </div>
         <a class="btn js-book" href="#price">Забронировать место за <span class="js-price">4 500 ₽</span></a>
-        <span class="seats">Осталось <b class="js-seats">10</b> из 10 мест</span>
+        <p class="deadline js-deadline"></p>
       </div>
     </div>
+    <div class="scroll-hint">листайте</div>
   </header>
 
-  <!-- PAINS -->
-  <section class="alt">
+  <section class="pains">
     <div class="wrap">
-      <span class="eyebrow">Знакомо ли вам это?</span>
-      <h2>«Да», о котором потом жалеешь</h2>
-      <div class="pains">
-        <div class="pain">Вы соглашаетесь на встречу, которая вам не нужна, а потом весь вечер корите себя за потерянное время.</div>
-        <div class="pain">Вы говорите «да» на просьбу коллеги, хотя ваша загрузка уже переполнена.</div>
-        <div class="pain">Вы молчите, когда вас перебивают, и потом чувствуете ком в горле и злость на себя.</div>
-        <div class="pain">Вы выбираете чужое удобство вместо своего комфорта. Снова и снова.</div>
-      </div>
-      <div class="insight">
-        <h3>Это не про слабый характер и неуверенность в себе. Это про телесную привычку.</h3>
-        <p>Часто наше тело быстрее головы решает: «Соглашайся, иначе будет конфликт». Мы автоматически напрягаем плечи, задерживаем дыхание или подавляем импульс сказать «нет». Это происходит за секунды, и мы даже не успеваем включить логику.</p>
-        <p class="final">Если вы устали от «языка согласия», который разрушает ваши границы и забирает энергию, — этот тренинг для вас.</p>
+      <span class="kicker reveal">Знакомо ли вам это?</span>
+      <div>
+        <p class="pain reveal">Вы соглашаетесь на встречу, которая вам не нужна, а потом <em>весь вечер корите себя</em> за потерянное время.</p>
+        <p class="pain reveal">Вы говорите «да» на просьбу коллеги, хотя <em>ваша загрузка уже переполнена.</em></p>
+        <p class="pain reveal">Вы молчите, когда вас перебивают, и потом чувствуете <em>ком в горле и злость на себя.</em></p>
+        <p class="pain reveal">Вы выбираете чужое удобство вместо своего комфорта. <em>Снова и снова.</em></p>
       </div>
     </div>
   </section>
 
-  <!-- WHY BODY -->
-  <section>
-    <div class="wrap split">
+  <!-- ===== 2. ОСОЗНАНИЕ ===== -->
+  <section class="bodymap" id="bodymap">
+    <div class="bodymap-inner wrap">
       <div>
-        <span class="eyebrow">Почему именно телесный формат</span>
-        <h2>Голова знает, что «надо отказать». Тело — нет.</h2>
-        <p class="lead">В момент стресса тело выдаёт привычную реакцию — замирание или подчинение. Бесконечные аффирмации и чтение книг не работают, потому что паттерн записан в нервной системе.</p>
+        <h2>Это не про слабый характер. <em>Это про телесную привычку.</em></h2>
+        <p>Часто наше тело быстрее головы решает: «Соглашайся, иначе будет конфликт». Мы автоматически напрягаем плечи, задерживаем дыхание или подавляем импульс сказать «нет». Это происходит за секунды — мы даже не успеваем включить логику.</p>
+        <div class="step-dots"><i></i><i></i><i></i><i></i></div>
       </div>
-      <div>
-        <p style="margin-bottom:18px;font-weight:600">На тренинге мы не будем «просто разговаривать». Мы будем проживать новый опыт через тело:</p>
-        <ul class="checks">
-          <li>Учиться замечать момент, когда вы уже начали соглашаться (и останавливать это).</li>
+      <svg class="figure" viewBox="-130 0 660 580" role="img" aria-label="Силуэт женщины: напряжение в плечах, дыхании, горле и животе">
+        <defs>
+          <linearGradient id="fadeG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset=".72" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <mask id="fadeM" maskUnits="userSpaceOnUse" x="-130" y="0" width="660" height="580"><rect x="-130" y="0" width="660" height="580" fill="url(#fadeG)"/></mask>
+          <radialGradient id="glowG" cx=".5" cy=".45" r=".5">
+            <stop offset="0" stop-color="#e0896a" stop-opacity=".22"/><stop offset="1" stop-color="#e0896a" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse class="aura" cx="200" cy="250" rx="210" ry="260" fill="url(#glowG)"/>
+        <g class="body" mask="url(#fadeM)">
+          <image href="img/silhouette.png" x="-90" y="0" width="580" height="580"/>
+        </g>
+        <g class="pt" data-step="1">
+          <circle class="ring" cx="134" cy="209" r="9"/><circle class="core" cx="134" cy="209" r="5"/>
+          <circle class="ring" cx="266" cy="209" r="9"/><circle class="core" cx="266" cy="209" r="5"/>
+          <line x1="276" y1="206" x2="336" y2="186"/><text x="342" y="191">плечи напрягаются</text>
+        </g>
+        <g class="pt" data-step="2">
+          <circle class="ring" cx="200" cy="250" r="9"/><circle class="core" cx="200" cy="250" r="5"/>
+          <line x1="212" y1="250" x2="336" y2="262"/><text x="342" y="267">дыхание замирает</text>
+        </g>
+        <g class="pt" data-step="3">
+          <circle class="ring" cx="200" cy="168" r="9"/><circle class="core" cx="200" cy="168" r="5"/>
+          <line x1="188" y1="168" x2="64" y2="150"/><text x="58" y="155" text-anchor="end">«нет» застревает в горле</text>
+        </g>
+        <g class="pt" data-step="4">
+          <circle class="ring" cx="200" cy="360" r="9"/><circle class="core" cx="200" cy="360" r="5"/>
+          <line x1="188" y1="360" x2="64" y2="368"/><text x="58" y="373" text-anchor="end">и тело говорит «да»</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===== 3. ОПОРА ===== -->
+  <section class="practice">
+    <div class="wrap practice-grid">
+      <div class="reveal">
+        <span class="kicker">Почему именно телесный формат</span>
+        <h2>Голова знает, что «надо отказать». <em>Тело — пока нет.</em></h2>
+        <p class="sub">В момент стресса тело выдаёт привычную реакцию — замирание или подчинение. Бесконечные аффирмации и чтение книг не работают, потому что паттерн записан в нервной системе.</p>
+      </div>
+      <div class="reveal">
+        <p class="intro">На тренинге мы не будем «просто разговаривать». Мы будем проживать новый опыт через тело:</p>
+        <ol>
+          <li>Учиться замечать момент, когда вы уже начали соглашаться — и останавливать это.</li>
           <li>Находить опору в теле, чтобы сказать «нет» без чувства вины.</li>
           <li>Снимать телесные зажимы, которые возникают при отстаивании своих границ.</li>
-        </ul>
+        </ol>
+      </div>
+    </div>
+    <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 70 C240 130 420 10 720 55 C1000 98 1200 20 1440 62 L1440 120 L0 120 Z" fill="#f4ebe1"/>
+    </svg>
+  </section>
+
+  <section class="block light">
+    <div class="wrap">
+      <span class="kicker reveal">Что вы получите за 1 день</span>
+      <h2 class="reveal">От зажима — <em>к праву выбора</em></h2>
+      <div class="path reveal">
+        <svg class="path-line" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
+          <path pathLength="1" d="M7 30 C80 -5 170 60 260 34 C350 8 420 55 515 36 C610 18 690 55 772 30 C860 4 930 40 1000 22"/>
+        </svg>
+        <div class="step" style="--y:23px"><span class="num">01</span><h3>Диагностика</h3><p>Выясните ваш личный телесный сценарий — где именно в теле «живёт» ваше автоматическое «да».</p></div>
+        <div class="step" style="--y:27px"><span class="num">02</span><h3>Инструменты</h3><p>Освоите практики, которые помогут удерживать контакт с собой в момент давления.</p></div>
+        <div class="step" style="--y:29px"><span class="num">03</span><h3>Опыт</h3><p>В безопасной группе — всего 10 человек — попробуете сказать «нет» и выдержать это состояние без паники и желания сразу же извиниться.</p></div>
+        <div class="step" style="--y:23px"><span class="num">04</span><h3>Ясность</h3><p>Поймёте разницу между «я уступаю из страха» и «я соглашаюсь из любви».</p></div>
       </div>
     </div>
   </section>
 
-  <!-- RESULTS -->
-  <section class="alt">
+  <section class="block light-2">
     <div class="wrap">
-      <span class="eyebrow">Результат</span>
-      <h2>Что вы получите за 1 день</h2>
-      <div class="results">
-        <div class="result"><h3>Диагностика</h3><p>Выясните ваш личный телесный сценарий — где именно в теле «живёт» ваше автоматическое «да».</p></div>
-        <div class="result"><h3>Инструменты</h3><p>Освоите практики, которые помогут удерживать контакт с собой в момент давления.</p></div>
-        <div class="result"><h3>Опыт</h3><p>В безопасной группе (всего 10 человек!) попробуете сказать «нет» и выдержать это состояние без паники и желания сразу же извиниться.</p></div>
-        <div class="result"><h3>Ясность</h3><p>Поймёте разницу между «я уступаю из страха» и «я соглашаюсь из любви».</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOSTS -->
-  <section>
-    <div class="wrap">
-      <span class="eyebrow">Ведущие тренинга</span>
-      <h2>Мы не просто теоретики</h2>
-      <p class="lead" style="margin-bottom:36px">Мы практикующие специалисты, которые работают с телом и границами каждый день.</p>
+      <span class="kicker reveal">Ведущие тренинга</span>
+      <h2 class="reveal">Мы не просто теоретики. <em>Мы работаем с телом и границами каждый день.</em></h2>
       <div class="hosts">
-        <div class="host">
-          <!-- Чтобы добавить фото: замените «А» на <img src="aida.jpg" alt="Аида Баймухаметова"> -->
-          <div class="avatar">А</div>
-          <div>
-            <h3>Аида Баймухаметова</h3>
-            <p>Фасилитатор телесного развития, практикующий психолог в интегративном подходе, блогер.</p>
+        <div class="host reveal">
+          <div class="portrait">
+            <div class="blob"><img src="img/aida.jpg" alt="Аида Баймухаметова" loading="lazy" style="--pos: 57% 68%; --zoom: 1.75"></div>
+            <svg class="orbit" viewBox="0 0 200 200" aria-hidden="true">
+              <defs><path id="o1" d="M100 100 m-86 0 a86 86 0 1 1 172 0 a86 86 0 1 1 -172 0"/></defs>
+              <text><textPath href="#o1" textLength="530" lengthAdjust="spacing">телесное развитие · интегративный подход · движение · опора · </textPath></text>
+            </svg>
           </div>
+          <h3>Аида Баймухаметова</h3>
+          <p>Фасилитатор телесного развития, практикующий психолог в интегративном подходе, блогер.</p>
         </div>
-        <div class="host">
-          <!-- Чтобы добавить фото: замените «К» на <img src="katerina.jpg" alt="Катерина Керен"> -->
-          <div class="avatar">К</div>
-          <div>
-            <h3>Катерина Керен</h3>
-            <p>Практикующий психолог в гештальт-подходе, семейном системном подходе и танцевально-двигательном.</p>
+        <div class="host reveal">
+          <div class="portrait">
+            <div class="blob"><img src="img/katerina.jpg" alt="Катерина Керен" loading="lazy" style="--pos: 35% 30%; --zoom: 1.05"></div>
+            <svg class="orbit" viewBox="0 0 200 200" aria-hidden="true">
+              <defs><path id="o2" d="M100 100 m-86 0 a86 86 0 1 1 172 0 a86 86 0 1 1 -172 0"/></defs>
+              <text><textPath href="#o2" textLength="530" lengthAdjust="spacing">гештальт · системный подход · танцевально-двигательная терапия · </textPath></text>
+            </svg>
           </div>
+          <h3>Катерина Керен</h3>
+          <p>Практикующий психолог в гештальт-подходе, семейном системном подходе и танцевально-двигательном.</p>
         </div>
       </div>
-      <p class="hosts-note">Два разных взгляда, два разных подхода, объединённых одной целью — вернуть вам право выбора.</p>
+      <p class="hosts-note reveal">Два разных взгляда, два разных подхода, объединённых одной целью — вернуть вам право выбора.</p>
     </div>
   </section>
 
-  <!-- AUDIENCE -->
-  <section class="alt">
+  <section class="block light">
     <div class="wrap">
-      <span class="eyebrow">Для кого</span>
-      <h2>Этот тренинг для вас, если…</h2>
-      <ul class="audience">
-        <li>Вы чувствуете хроническую усталость от общения.</li>
-        <li>Ловите себя на мысли «я опять промолчал(а)».</li>
-        <li>Хотите перестать быть «удобным» для всех, кроме себя.</li>
-        <li>Готовы к работе с телом, а не только с мыслями.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- PRICE -->
-  <section id="price">
-    <div class="wrap">
-      <span class="eyebrow">Стоимость участия</span>
-      <h2>Чем раньше — тем выгоднее</h2>
-      <p class="lead">Мы намеренно сделали цену гибкой, чтобы у вас был выбор.</p>
-      <div class="prices" style="margin-top:36px">
-        <div class="price" data-until="2026-10-26">
-          <div class="when">До 26 октября включительно</div>
-          <div class="amount">4 500 ₽</div>
-        </div>
-        <div class="price" data-until="2026-11-08">
-          <div class="when">С 27 октября по 8 ноября</div>
-          <div class="amount">4 700 ₽</div>
-        </div>
-        <div class="price" data-until="2026-11-14">
-          <div class="when">С 9 по 14 ноября</div>
-          <div class="amount">5 000 ₽</div>
-        </div>
+      <span class="kicker reveal">Для кого этот тренинг</span>
+      <h2 class="reveal">Отметьте, что <em>про вас</em></h2>
+      <div class="audience reveal">
+        <button class="aud" aria-pressed="false"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Я чувствую хроническую усталость от общения</button>
+        <button class="aud" aria-pressed="false"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Ловлю себя на мысли «я опять промолчал(а)»</button>
+        <button class="aud" aria-pressed="false"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Хочу перестать быть «удобным» для всех, кроме себя</button>
+        <button class="aud" aria-pressed="false"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готов(а) к работе с телом, а не только с мыслями</button>
       </div>
-      <p class="price-note">Группа до 10 человек. Тренинг предполагает глубокую личную работу и телесные практики.</p>
+      <p class="aud-hint">Нажмите на пункты, которые откликаются.</p>
+      <div class="aud-result">
+        <p>Похоже, этот тренинг — для вас.</p>
+        <a class="btn js-book" href="#price">Забронировать место за <span class="js-price">4 500 ₽</span></a>
+      </div>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <section class="alt final-cta" id="book">
+  <section class="block light-2" id="price">
+    <div class="wrap">
+      <span class="kicker reveal">Стоимость участия</span>
+      <h2 class="reveal">Чем раньше решите — <em>тем выгоднее</em></h2>
+      <div class="price-track reveal">
+        <div class="tier" data-until="2026-10-26"><div class="when">До 26 октября включительно</div><div class="amount">4 500 ₽</div></div>
+        <div class="tier" data-until="2026-11-08"><div class="when">С 27 октября по 8 ноября</div><div class="amount">4 700 ₽</div></div>
+        <div class="tier" data-until="2026-11-14"><div class="when">С 9 по 14 ноября</div><div class="amount">5 000 ₽</div></div>
+      </div>
+      <div class="price-foot reveal">
+        <a class="btn js-book" href="#book">Забронировать за <span class="js-price">4 500 ₽</span></a>
+        <p><span class="countdown js-countdown"></span><br>Группа до 10 человек. Тренинг предполагает глубокую личную работу и телесные практики.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. ВЫДОХ ===== -->
+  <section class="exhale" id="book">
+    <div class="breath-label" aria-hidden="true"><span>вдох</span><span>выдох</span></div>
+    <svg class="breath-line" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 100 C120 96 240 104 360 100 C480 96 600 104 720 100 C840 96 960 104 1080 100 C1200 96 1320 104 1440 100">
+        <animate attributeName="d" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.4;1" keySplines=".45 0 .55 1;.45 0 .55 1"
+          values="M0 100 C120 96 240 104 360 100 C480 96 600 104 720 100 C840 96 960 104 1080 100 C1200 96 1320 104 1440 100;
+                  M0 100 C120 20 240 180 360 100 C480 20 600 180 720 100 C840 20 960 180 1080 100 C1200 20 1320 180 1440 100;
+                  M0 100 C120 96 240 104 360 100 C480 96 600 104 720 100 C840 96 960 104 1080 100 C1200 96 1320 104 1440 100"/>
+      </path>
+      <path d="M0 100 C120 102 240 98 360 100 C480 102 600 98 720 100 C840 102 960 98 1080 100 C1200 102 1320 98 1440 100">
+        <animate attributeName="d" dur="10s" begin="-0.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.4;1" keySplines=".45 0 .55 1;.45 0 .55 1"
+          values="M0 100 C120 102 240 98 360 100 C480 102 600 98 720 100 C840 102 960 98 1080 100 C1200 102 1320 98 1440 100;
+                  M0 100 C120 150 240 50 360 100 C480 150 600 50 720 100 C840 150 960 50 1080 100 C1200 150 1320 50 1440 100;
+                  M0 100 C120 102 240 98 360 100 C480 102 600 98 720 100 C840 102 960 98 1080 100 C1200 102 1320 98 1440 100"/>
+      </path>
+      <path d="M0 100 C180 98 300 102 480 100 C660 98 780 102 960 100 C1140 98 1260 102 1440 100">
+        <animate attributeName="d" dur="10s" begin="-1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.4;1" keySplines=".45 0 .55 1;.45 0 .55 1"
+          values="M0 100 C180 98 300 102 480 100 C660 98 780 102 960 100 C1140 98 1260 102 1440 100;
+                  M0 100 C180 40 300 160 480 100 C660 40 780 160 960 100 C1140 40 1260 160 1440 100;
+                  M0 100 C180 98 300 102 480 100 C660 98 780 102 960 100 C1140 98 1260 102 1440 100"/>
+      </path>
+    </svg>
     <div class="wrap">
       <h2>Выдохните.</h2>
       <p class="lead">У вас есть право выбирать себя.</p>
       <a class="btn js-book" href="#price">Забронировать место за <span class="js-price">4 500 ₽</span></a>
-      <div class="seat-bar"><span class="js-seatbar" style="width:0%"></span></div>
-      <p class="seats">Количество мест ограничено: осталось <b class="js-seats">10</b> из 10</p>
     </div>
   </section>
 
   <footer>
-    <div class="wrap">
-      Телесный тренинг «Почему я соглашаюсь, когда не хочу» · 14 ноября 2026, Тюмень<br>
-      Аида Баймухаметова и Катерина Керен
-    </div>
+    Телесный тренинг «Почему я соглашаюсь, когда не хочу» · 14 ноября 2026, Тюмень<br>
+    Аида Баймухаметова и Катерина Керен
+    <nav class="footer-links">
+      <a href="offer.html">Договор оферты</a>
+      <a href="privacy.html">Согласие на обработку персональных данных</a>
+    </nav>
   </footer>
 
   <div class="sticky"><a class="btn js-book" href="#price">Забронировать за <span class="js-price">4 500 ₽</span></a></div>
 
+  <!-- ===== Запись: форма + выбор мессенджера ===== -->
+  <div class="modal" id="booking-modal" aria-hidden="true">
+    <div class="modal-overlay" data-close-modal></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+      <span class="kicker">14 ноября · Тюмень</span>
+      <h2 id="modal-title">Забронировать место</h2>
+      <p class="modal-sub">«Почему я соглашаюсь, когда не хочу» · <span class="js-price">4 500 ₽</span></p>
+
+      <form class="booking-form" id="booking-form" novalidate>
+        <label class="field">
+          <span>Ваше имя</span>
+          <input type="text" name="name" autocomplete="name" required placeholder="Как к вам обращаться">
+        </label>
+        <label class="field">
+          <span>Телефон</span>
+          <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required placeholder="+7 (___) ___-__-__">
+        </label>
+        <label class="field">
+          <span>Почта</span>
+          <input type="email" name="email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+        </label>
+        <p class="field-error" id="form-error" hidden>Пожалуйста, заполните все поля корректно</p>
+      </form>
+
+      <p class="modal-hint">Заполните форму и выберите, где вам удобнее продолжить общение:</p>
+      <div class="messengers">
+        <a class="messenger" data-messenger="tg" target="_blank" rel="noopener noreferrer" hidden><img src="img/telegram.svg" alt="" width="36" height="36">Telegram</a>
+        <a class="messenger" data-messenger="vk" target="_blank" rel="noopener noreferrer" hidden><img src="img/vk-messenger.svg" alt="" width="36" height="36">ВКонтакте</a>
+        <a class="messenger" data-messenger="max" target="_blank" rel="noopener noreferrer" hidden><img src="img/max-logo.png" alt="" width="36" height="36">MAX</a>
+      </div>
+      <p class="modal-legal">Оставляя заявку, вы даёте <a href="privacy.html" target="_blank">согласие на обработку персональных данных</a> и принимаете условия <a href="offer.html" target="_blank">договора оферты</a>.</p>
+    </div>
+  </div>
+  <div class="toast" id="booking-toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="config.js"></script>
   <script>
-    // ===== НАСТРОЙКИ =====
-    const CONFIG = {
-      // Ссылка для записи (Telegram, WhatsApp, форма и т.п.). Пусто — кнопка ведёт к блоку с ценами.
-      bookingUrl: "",
-      // Сколько мест осталось из 10
-      seatsLeft: 10,
-      seatsTotal: 10,
-    };
-    // =====================
 
-    const prices = [...document.querySelectorAll(".price")];
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    let current = prices.find(p => today <= new Date(p.dataset.until + "T00:00:00")) || prices[prices.length - 1];
-    let passed = true;
-    prices.forEach(p => {
-      if (p === current) { p.classList.add("current"); passed = false; }
-      else if (passed) p.classList.add("past");
-    });
-    const amount = current.querySelector(".amount").textContent;
-    document.querySelectorAll(".js-price").forEach(el => el.textContent = amount);
-
-    document.querySelectorAll(".js-seats").forEach(el => el.textContent = CONFIG.seatsLeft);
-    document.querySelectorAll(".seats").forEach(el => el.innerHTML = el.innerHTML.replace(/из \d+/, "из " + CONFIG.seatsTotal));
-    const bar = document.querySelector(".js-seatbar");
-    bar.style.width = ((CONFIG.seatsTotal - CONFIG.seatsLeft) / CONFIG.seatsTotal * 100) + "%";
-
-    if (CONFIG.bookingUrl) {
-      document.querySelectorAll(".js-book").forEach(a => {
-        a.href = CONFIG.bookingUrl; a.target = "_blank"; a.rel = "noopener";
-      });
+    // бегущая строка и стена «да»
+    document.querySelector(".marquee-track").innerHTML = "<span>14 ноября · Тюмень</span>".repeat(14);
+    const yesWords = ["да", "конечно", "хорошо", "без проблем", "ладно", "да, конечно", "мне не сложно", "я смогу", "как скажешь", "да-да"];
+    const wall = document.querySelector(".yes-wall");
+    for (let r = 0; r < 12; r++) {
+      let line = "";
+      for (let i = 0; i < 40; i++) line += yesWords[(i * 7 + r * 3) % yesWords.length] + " · ";
+      wall.insertAdjacentHTML("beforeend", "<div>" + line + line + "</div>");
     }
 
-    // Мобильная плавающая кнопка: показываем после первого экрана, прячем у финального блока
+    // цены и дедлайн
+    const plural = (n, f) => f[(n % 10 === 1 && n % 100 !== 11) ? 0 : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? 1 : 2];
+    const tiers = [...document.querySelectorAll(".tier")];
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const endOf = t => new Date(t.dataset.until + "T00:00:00");
+    const idx = tiers.findIndex(t => today <= endOf(t));
+    const cur = idx === -1 ? tiers.length - 1 : idx;
+    tiers.forEach((t, i) => t.classList.add(i < cur ? "past" : i === cur ? "current" : "future"));
+    const amount = tiers[cur].querySelector(".amount").textContent;
+    document.querySelectorAll(".js-price").forEach(el => el.textContent = amount);
+    const next = tiers[cur + 1];
+    const daysLeft = Math.round((endOf(tiers[cur]) - today) / 864e5) + 1;
+    const deadlineText = next
+      ? `Цена ${amount} действует ещё <b>${daysLeft} ${plural(daysLeft, ["день", "дня", "дней"])}</b> — потом ${next.querySelector(".amount").textContent}`
+      : `Последние дни перед тренингом — цена ${amount}`;
+    document.querySelector(".js-deadline").innerHTML = deadlineText;
+    document.querySelector(".js-countdown").innerHTML = deadlineText.replace(/<\/?b>/g, "");
+
+    // ===== запись: модальное окно, форма, мессенджеры =====
+    const FORM = window.FORM_CONFIG || {};
+    const booking = FORM.booking || {};
+    const bookingMsg = booking.message || "Здравствуйте, хочу записаться на тренинг «Почему я соглашаюсь, когда не хочу»";
+    const modal = document.querySelector("#booking-modal");
+    const form = document.querySelector("#booking-form");
+    const formError = document.querySelector("#form-error");
+    const toast = document.querySelector("#booking-toast");
+    let toastTimer;
+
+    // ссылки на мессенджеры с готовым текстом сообщения
+    const links = {};
+    if (booking.vk) links.vk = `https://vk.com/im?sel=${String(booking.vk).replace(/\D/g, "")}&msg=${encodeURIComponent(bookingMsg)}`;
+    if (booking.tg) {
+      const tg = String(booking.tg).trim();
+      const base = /^https?:\/\//i.test(tg) ? tg.replace(/\/$/, "") : `https://t.me/${tg.replace(/^@/, "")}`;
+      links.tg = `${base}/${encodeURIComponent(bookingMsg)}`;
+    }
+    if (booking.max) links.max = String(booking.max).trim().replace(/\/$/, "");
+    document.querySelectorAll("[data-messenger]").forEach(a => {
+      const href = links[a.dataset.messenger];
+      if (href) { a.href = href; a.hidden = false; }
+    });
+
+    const openModal = e => {
+      e && e.preventDefault();
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => form.querySelector("input").focus(), 300);
+    };
+    const closeModal = () => {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    };
+    document.querySelectorAll(".js-book").forEach(a => a.addEventListener("click", openModal));
+    document.querySelectorAll("[data-close-modal]").forEach(el => el.addEventListener("click", closeModal));
+    addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+
+    const values = () => {
+      const d = new FormData(form);
+      return { name: String(d.get("name") || "").trim(), phone: String(d.get("phone") || "").trim(), email: String(d.get("email") || "").trim() };
+    };
+    const validate = () => {
+      const v = values();
+      const ok = v.name.length >= 2 && v.phone.replace(/\D/g, "").length >= 10 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email);
+      formError.hidden = ok;
+      form.classList.toggle("has-error", !ok);
+      return ok;
+    };
+    form.addEventListener("input", () => { if (form.classList.contains("has-error")) validate(); });
+
+    // Заявка уходит в Google Apps Script через скрытый iframe: нативный POST работает во всех браузерах
+    // и не упирается в CORS, а страница при этом не перезагружается.
+    const submitBooking = v => {
+      if (!FORM.endpoint) return;
+      let frame = document.querySelector("#booking-frame");
+      if (!frame) {
+        frame = document.createElement("iframe");
+        frame.name = frame.id = "booking-frame";
+        frame.setAttribute("aria-hidden", "true");
+        frame.style.cssText = "position:absolute;width:1px;height:1px;border:0;opacity:0;pointer-events:none";
+        document.body.appendChild(frame);
+      }
+      const f = document.createElement("form");
+      f.method = "POST"; f.action = FORM.endpoint; f.target = "booking-frame"; f.style.display = "none";
+      Object.entries({ ...v, subject: FORM.subject || "Заявка на тренинг" }).forEach(([k, val]) => {
+        const i = document.createElement("input");
+        i.type = "hidden"; i.name = k; i.value = val; f.appendChild(i);
+      });
+      document.body.appendChild(f);
+      f.submit();
+      setTimeout(() => f.remove(), 0);
+    };
+
+    const copyMessage = async () => {
+      try { await navigator.clipboard.writeText(bookingMsg); return true; }
+      catch {
+        const t = document.createElement("textarea");
+        t.value = bookingMsg; t.style.cssText = "position:fixed;left:-9999px";
+        document.body.appendChild(t); t.select();
+        let ok = false; try { ok = document.execCommand("copy"); } catch {}
+        t.remove(); return ok;
+      }
+    };
+    const showToast = copied => {
+      toast.textContent = copied
+        ? "Заявка отправлена. Текст скопирован — вставьте его в чат и отправьте"
+        : "Заявка отправлена. Напишите в чат: «Здравствуйте, хочу записаться на тренинг…»";
+      toast.hidden = false;
+      requestAnimationFrame(() => toast.classList.add("show"));
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { toast.classList.remove("show"); setTimeout(() => toast.hidden = true, 300); }, 5000);
+    };
+
+    // ссылка открывается в новой вкладке (без preventDefault), поэтому заявка успевает уйти
+    document.querySelectorAll("[data-messenger]").forEach(a => a.addEventListener("click", e => {
+      if (!validate()) { e.preventDefault(); return; }
+      try { submitBooking(values()); } catch {}
+      copyMessage().then(copied => { closeModal(); showToast(copied); });
+    }));
+
+    // появление при прокрутке
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .2 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    // карта тела: точки напряжения загораются по мере прокрутки
+    const bm = document.querySelector("#bodymap");
+    const fig = document.querySelector(".figure");
+    const pts = [...fig.querySelectorAll(".pt")];
+    const dots = [...document.querySelectorAll(".step-dots i")];
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) { const bl = document.querySelector(".breath-line"); bl.setCurrentTime(4); bl.pauseAnimations(); }
+
+    // для кого: отметки
+    const auds = [...document.querySelectorAll(".aud")];
+    const audResult = document.querySelector(".aud-result");
+    auds.forEach(b => b.addEventListener("click", () => {
+      b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") !== "true");
+      const n = auds.filter(x => x.getAttribute("aria-pressed") === "true").length;
+      audResult.classList.toggle("show", n >= 2);
+    }));
+
+    // мобильная плавающая кнопка
     const sticky = document.querySelector(".sticky");
     const hero = document.querySelector(".hero");
-    const finalCta = document.querySelector("#book");
+    const exhale = document.querySelector("#book");
+
     const onScroll = () => {
+      if (!reduced) {
+        const r = bm.getBoundingClientRect();
+        const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+        const step = Math.min(4, Math.floor(p * 5));
+        pts.forEach(pt => pt.classList.toggle("on", +pt.dataset.step <= step));
+        dots.forEach((d, i) => d.classList.toggle("on", i < step));
+        fig.classList.toggle("tense", step >= 4);
+      }
       const pastHero = hero.getBoundingClientRect().bottom < 0;
-      const atFinal = finalCta.getBoundingClientRect().top < window.innerHeight;
-      sticky.classList.toggle("show", pastHero && !atFinal);
+      const atEnd = exhale.getBoundingClientRect().top < innerHeight;
+      sticky.classList.toggle("show", pastHero && !atEnd);
     };
     addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
   </script>
 </body>
 </html>

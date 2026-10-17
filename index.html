@@ -3,24 +3,427 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aida & Kate</title>
+  <title>Почему я соглашаюсь, когда не хочу — телесный тренинг в Тюмени</title>
+  <meta name="description" content="Телесный тренинг Аиды Баймухаметовой и Катерины Керен. 14 ноября, Тюмень. Закрытая группа до 10 человек.">
+  <meta property="og:title" content="Телесный тренинг «Почему я соглашаюсь, когда не хочу»">
+  <meta property="og:description" content="14 ноября, Тюмень. Закрытая группа до 10 человек. Ведущие: Аида Баймухаметова и Катерина Керен.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { --bg: #faf7f2; --fg: #2b2b2b; --muted: #7a7a7a; }
-    @media (prefers-color-scheme: dark) { :root { --bg: #161616; --fg: #f2f2f2; --muted: #9a9a9a; } }
-    * { box-sizing: border-box; margin: 0; }
-    body {
-      min-height: 100vh; display: grid; place-items: center; padding: 16px;
-      background: var(--bg); color: var(--fg);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; text-align: center;
+    :root {
+      --bg: #f7f1ea;
+      --bg-alt: #efe5d9;
+      --card: #fffaf4;
+      --fg: #2d2621;
+      --muted: #6f625a;
+      --accent: #b0644a;
+      --accent-hover: #984f37;
+      --accent-soft: #ecd3c6;
+      --sage: #8a9a7e;
+      --line: #e2d5c7;
+      --radius: 22px;
+      --max: 1080px;
     }
-    h1 { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em; }
-    p { margin-top: 12px; color: var(--muted); font-size: 1.1rem; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1815;
+        --bg-alt: #241f1b;
+        --card: #2a2420;
+        --fg: #f1e9e1;
+        --muted: #b6a89c;
+        --accent: #d9876b;
+        --accent-hover: #e69b81;
+        --accent-soft: #4a3329;
+        --sage: #a7b69a;
+        --line: #3a322c;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
+    h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 28px; }
+    h3 { font-size: 1.55rem; margin-bottom: 8px; }
+    p + p { margin-top: 14px; }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    section { padding: 88px 0; }
+    .alt { background: var(--bg-alt); }
+    .eyebrow {
+      display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .lead { font-size: 1.15rem; color: var(--muted); max-width: 680px; }
+
+    /* Buttons */
+    .btn {
+      display: inline-block; text-align: center;
+      background: var(--accent); color: #fff; text-decoration: none;
+      font-weight: 600; font-size: 1.05rem; padding: 18px 32px; border-radius: 999px;
+      border: none; cursor: pointer; transition: background .2s, transform .2s;
+      box-shadow: 0 10px 30px -12px var(--accent);
+    }
+    .js-price { white-space: nowrap; }
+    .btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent; color: var(--fg); box-shadow: none;
+      border: 1.5px solid var(--line);
+    }
+    .btn-ghost:hover { background: var(--card); }
+
+    /* Hero */
+    .hero { padding: 40px 0 96px; position: relative; overflow: hidden; }
+    .hero::before, .hero::after {
+      content: ""; position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; z-index: 0;
+    }
+    .hero::before { width: 420px; height: 420px; background: var(--accent-soft); top: -120px; right: -100px; }
+    .hero::after { width: 320px; height: 320px; background: color-mix(in srgb, var(--sage) 35%, transparent); bottom: -80px; left: -120px; }
+    .hero .wrap { position: relative; z-index: 1; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0 64px; font-size: .9rem; color: var(--muted); }
+    .topbar strong { color: var(--fg); font-family: "Cormorant Garamond", serif; font-size: 1.35rem; }
+    .hero h1 { font-size: clamp(2.6rem, 7.5vw, 5.4rem); max-width: 900px; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero .lead { margin-top: 24px; }
+    .facts { display: flex; flex-wrap: wrap; gap: 12px; margin: 36px 0 40px; }
+    .fact {
+      background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+      padding: 10px 18px; font-size: .95rem; font-weight: 500;
+    }
+    .fact b { color: var(--accent); font-weight: 700; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .seats { font-size: .95rem; color: var(--muted); }
+    .seats b { color: var(--fg); }
+
+    /* Pain points */
+    .pains { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+    .pain {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 28px; position: relative;
+    }
+    .pain::before {
+      content: "“"; font-family: "Cormorant Garamond", serif; font-size: 4rem; line-height: 1;
+      color: var(--accent-soft); position: absolute; top: 10px; right: 20px;
+    }
+    .insight {
+      margin-top: 48px; padding: 40px; border-radius: var(--radius);
+      background: var(--fg); color: var(--bg);
+    }
+    .insight h3 { font-size: clamp(1.7rem, 3.5vw, 2.3rem); margin-bottom: 16px; }
+    .insight p { opacity: .85; }
+    .insight .final { opacity: 1; font-weight: 600; margin-top: 20px; }
+
+    /* Why body */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .checks { list-style: none; display: grid; gap: 14px; margin-top: 8px; }
+    .checks li {
+      background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+      padding: 20px 22px 20px 60px; position: relative;
+    }
+    .checks li::before {
+      content: ""; position: absolute; left: 22px; top: 24px; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--sage);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/16px no-repeat, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+
+    /* Results */
+    .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; counter-reset: r; }
+    .result {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px;
+      counter-increment: r;
+    }
+    .result::before {
+      content: "0" counter(r); display: block; font-family: "Cormorant Garamond", serif;
+      font-size: 2.6rem; color: var(--accent); line-height: 1; margin-bottom: 16px;
+    }
+    .result p { color: var(--muted); }
+
+    /* Hosts */
+    .hosts { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .host {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px;
+      display: flex; gap: 22px; align-items: flex-start;
+    }
+    .avatar {
+      flex: 0 0 auto; width: 96px; height: 96px; border-radius: 50%;
+      display: grid; place-items: center; overflow: hidden;
+      font-family: "Cormorant Garamond", serif; font-size: 2.2rem; color: #fff;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .host:nth-child(1) .avatar { background: var(--accent); }
+    .host:nth-child(2) .avatar { background: var(--sage); }
+    .host p { color: var(--muted); }
+    .hosts-note { text-align: center; margin-top: 36px; font-family: "Cormorant Garamond", serif; font-size: 1.6rem; font-style: italic; }
+
+    /* Pricing */
+    .prices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 12px; }
+    .price {
+      background: var(--card); border: 1.5px solid var(--line); border-radius: var(--radius);
+      padding: 30px 26px; position: relative; transition: opacity .2s;
+    }
+    .price .when { font-size: .92rem; color: var(--muted); font-weight: 500; }
+    .price .amount { font-family: "Cormorant Garamond", serif; font-size: 2.8rem; font-weight: 600; margin-top: 8px; }
+    .price.current { border-color: var(--accent); box-shadow: 0 20px 40px -24px var(--accent); }
+    .price.current::after {
+      content: "Сейчас"; position: absolute; top: -13px; left: 24px;
+      background: var(--accent); color: #fff; font-size: .78rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 999px; letter-spacing: .04em;
+    }
+    .price.past { opacity: .45; }
+    .price.past .amount { text-decoration: line-through; }
+    .price-note { margin-top: 22px; color: var(--muted); font-size: .95rem; }
+
+    /* Audience */
+    .audience { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .audience li {
+      padding: 22px 24px; border-radius: 18px; background: var(--card); border: 1px solid var(--line);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .audience li::before { content: "—"; color: var(--accent); font-weight: 700; }
+
+    /* Final CTA */
+    .final-cta { text-align: center; }
+    .final-cta h2 { font-size: clamp(2.4rem, 6vw, 4rem); margin-bottom: 12px; }
+    .final-cta .lead { margin: 0 auto 36px; }
+    .seat-bar { max-width: 320px; height: 8px; border-radius: 99px; background: var(--line); margin: 22px auto 10px; overflow: hidden; }
+    .seat-bar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+
+    footer { padding: 40px 0 120px; text-align: center; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+
+    /* Sticky mobile CTA */
+    .sticky {
+      position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50;
+      display: none; transform: translateY(150%); transition: transform .3s;
+    }
+    .sticky.show { transform: none; }
+    .sticky .btn { width: 100%; }
+
+    @media (max-width: 820px) {
+      section { padding: 64px 0; }
+      .split, .hosts, .audience { grid-template-columns: 1fr; gap: 18px; }
+      .prices { grid-template-columns: 1fr; }
+      .host { flex-direction: column; }
+      .insight { padding: 28px; }
+      .topbar { padding-bottom: 40px; }
+      .sticky { display: block; }
+      .hero .btn { width: 100%; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Aida &amp; Kate</h1>
-    <p>Сайт скоро будет готов</p>
-  </main>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="topbar">
+        <strong>Аида &amp; Катерина</strong>
+        <span>14 ноября · Тюмень</span>
+      </div>
+      <span class="eyebrow">Телесный тренинг</span>
+      <h1>Почему я соглашаюсь, <em>когда не хочу</em></h1>
+      <p class="lead">Однодневный тренинг о том, как перестать говорить «да» на автомате и вернуть себе право выбора — через тело, а не только через голову.</p>
+      <div class="facts">
+        <span class="fact"><b>14 ноября</b> · Тюмень</span>
+        <span class="fact">Группа <b>до 10 человек</b></span>
+        <span class="fact">Закрытый формат</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn js-book" href="#price">Забронировать место за <span class="js-price">4 500 ₽</span></a>
+        <span class="seats">Осталось <b class="js-seats">10</b> из 10 мест</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAINS -->
+  <section class="alt">
+    <div class="wrap">
+      <span class="eyebrow">Знакомо ли вам это?</span>
+      <h2>«Да», о котором потом жалеешь</h2>
+      <div class="pains">
+        <div class="pain">Вы соглашаетесь на встречу, которая вам не нужна, а потом весь вечер корите себя за потерянное время.</div>
+        <div class="pain">Вы говорите «да» на просьбу коллеги, хотя ваша загрузка уже переполнена.</div>
+        <div class="pain">Вы молчите, когда вас перебивают, и потом чувствуете ком в горле и злость на себя.</div>
+        <div class="pain">Вы выбираете чужое удобство вместо своего комфорта. Снова и снова.</div>
+      </div>
+      <div class="insight">
+        <h3>Это не про слабый характер и неуверенность в себе. Это про телесную привычку.</h3>
+        <p>Часто наше тело быстрее головы решает: «Соглашайся, иначе будет конфликт». Мы автоматически напрягаем плечи, задерживаем дыхание или подавляем импульс сказать «нет». Это происходит за секунды, и мы даже не успеваем включить логику.</p>
+        <p class="final">Если вы устали от «языка согласия», который разрушает ваши границы и забирает энергию, — этот тренинг для вас.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY BODY -->
+  <section>
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Почему именно телесный формат</span>
+        <h2>Голова знает, что «надо отказать». Тело — нет.</h2>
+        <p class="lead">В момент стресса тело выдаёт привычную реакцию — замирание или подчинение. Бесконечные аффирмации и чтение книг не работают, потому что паттерн записан в нервной системе.</p>
+      </div>
+      <div>
+        <p style="margin-bottom:18px;font-weight:600">На тренинге мы не будем «просто разговаривать». Мы будем проживать новый опыт через тело:</p>
+        <ul class="checks">
+          <li>Учиться замечать момент, когда вы уже начали соглашаться (и останавливать это).</li>
+          <li>Находить опору в теле, чтобы сказать «нет» без чувства вины.</li>
+          <li>Снимать телесные зажимы, которые возникают при отстаивании своих границ.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="alt">
+    <div class="wrap">
+      <span class="eyebrow">Результат</span>
+      <h2>Что вы получите за 1 день</h2>
+      <div class="results">
+        <div class="result"><h3>Диагностика</h3><p>Выясните ваш личный телесный сценарий — где именно в теле «живёт» ваше автоматическое «да».</p></div>
+        <div class="result"><h3>Инструменты</h3><p>Освоите практики, которые помогут удерживать контакт с собой в момент давления.</p></div>
+        <div class="result"><h3>Опыт</h3><p>В безопасной группе (всего 10 человек!) попробуете сказать «нет» и выдержать это состояние без паники и желания сразу же извиниться.</p></div>
+        <div class="result"><h3>Ясность</h3><p>Поймёте разницу между «я уступаю из страха» и «я соглашаюсь из любви».</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOSTS -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">Ведущие тренинга</span>
+      <h2>Мы не просто теоретики</h2>
+      <p class="lead" style="margin-bottom:36px">Мы практикующие специалисты, которые работают с телом и границами каждый день.</p>
+      <div class="hosts">
+        <div class="host">
+          <!-- Чтобы добавить фото: замените «А» на <img src="aida.jpg" alt="Аида Баймухаметова"> -->
+          <div class="avatar">А</div>
+          <div>
+            <h3>Аида Баймухаметова</h3>
+            <p>Фасилитатор телесного развития, практикующий психолог в интегративном подходе, блогер.</p>
+          </div>
+        </div>
+        <div class="host">
+          <!-- Чтобы добавить фото: замените «К» на <img src="katerina.jpg" alt="Катерина Керен"> -->
+          <div class="avatar">К</div>
+          <div>
+            <h3>Катерина Керен</h3>
+            <p>Практикующий психолог в гештальт-подходе, семейном системном подходе и танцевально-двигательном.</p>
+          </div>
+        </div>
+      </div>
+      <p class="hosts-note">Два разных взгляда, два разных подхода, объединённых одной целью — вернуть вам право выбора.</p>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="alt">
+    <div class="wrap">
+      <span class="eyebrow">Для кого</span>
+      <h2>Этот тренинг для вас, если…</h2>
+      <ul class="audience">
+        <li>Вы чувствуете хроническую усталость от общения.</li>
+        <li>Ловите себя на мысли «я опять промолчал(а)».</li>
+        <li>Хотите перестать быть «удобным» для всех, кроме себя.</li>
+        <li>Готовы к работе с телом, а не только с мыслями.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PRICE -->
+  <section id="price">
+    <div class="wrap">
+      <span class="eyebrow">Стоимость участия</span>
+      <h2>Чем раньше — тем выгоднее</h2>
+      <p class="lead">Мы намеренно сделали цену гибкой, чтобы у вас был выбор.</p>
+      <div class="prices" style="margin-top:36px">
+        <div class="price" data-until="2026-10-26">
+          <div class="when">До 26 октября включительно</div>
+          <div class="amount">4 500 ₽</div>
+        </div>
+        <div class="price" data-until="2026-11-08">
+          <div class="when">С 27 октября по 8 ноября</div>
+          <div class="amount">4 700 ₽</div>
+        </div>
+        <div class="price" data-until="2026-11-14">
+          <div class="when">С 9 по 14 ноября</div>
+          <div class="amount">5 000 ₽</div>
+        </div>
+      </div>
+      <p class="price-note">Группа до 10 человек. Тренинг предполагает глубокую личную работу и телесные практики.</p>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="alt final-cta" id="book">
+    <div class="wrap">
+      <h2>Выдохните.</h2>
+      <p class="lead">У вас есть право выбирать себя.</p>
+      <a class="btn js-book" href="#price">Забронировать место за <span class="js-price">4 500 ₽</span></a>
+      <div class="seat-bar"><span class="js-seatbar" style="width:0%"></span></div>
+      <p class="seats">Количество мест ограничено: осталось <b class="js-seats">10</b> из 10</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      Телесный тренинг «Почему я соглашаюсь, когда не хочу» · 14 ноября 2026, Тюмень<br>
+      Аида Баймухаметова и Катерина Керен
+    </div>
+  </footer>
+
+  <div class="sticky"><a class="btn js-book" href="#price">Забронировать за <span class="js-price">4 500 ₽</span></a></div>
+
+  <script>
+    // ===== НАСТРОЙКИ =====
+    const CONFIG = {
+      // Ссылка для записи (Telegram, WhatsApp, форма и т.п.). Пусто — кнопка ведёт к блоку с ценами.
+      bookingUrl: "",
+      // Сколько мест осталось из 10
+      seatsLeft: 10,
+      seatsTotal: 10,
+    };
+    // =====================
+
+    const prices = [...document.querySelectorAll(".price")];
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    let current = prices.find(p => today <= new Date(p.dataset.until + "T00:00:00")) || prices[prices.length - 1];
+    let passed = true;
+    prices.forEach(p => {
+      if (p === current) { p.classList.add("current"); passed = false; }
+      else if (passed) p.classList.add("past");
+    });
+    const amount = current.querySelector(".amount").textContent;
+    document.querySelectorAll(".js-price").forEach(el => el.textContent = amount);
+
+    document.querySelectorAll(".js-seats").forEach(el => el.textContent = CONFIG.seatsLeft);
+    document.querySelectorAll(".seats").forEach(el => el.innerHTML = el.innerHTML.replace(/из \d+/, "из " + CONFIG.seatsTotal));
+    const bar = document.querySelector(".js-seatbar");
+    bar.style.width = ((CONFIG.seatsTotal - CONFIG.seatsLeft) / CONFIG.seatsTotal * 100) + "%";
+
+    if (CONFIG.bookingUrl) {
+      document.querySelectorAll(".js-book").forEach(a => {
+        a.href = CONFIG.bookingUrl; a.target = "_blank"; a.rel = "noopener";
+      });
+    }
+
+    // Мобильная плавающая кнопка: показываем после первого экрана, прячем у финального блока
+    const sticky = document.querySelector(".sticky");
+    const hero = document.querySelector(".hero");
+    const finalCta = document.querySelector("#book");
+    const onScroll = () => {
+      const pastHero = hero.getBoundingClientRect().bottom < 0;
+      const atFinal = finalCta.getBoundingClientRect().top < window.innerHeight;
+      sticky.classList.toggle("show", pastHero && !atFinal);
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+  </script>
 </body>
 </html>

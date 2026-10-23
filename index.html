@@ -31,6 +31,7 @@
       --max: 1120px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
     html { scroll-behavior: smooth; }
     body {
       background: var(--ink); color: var(--text);
@@ -342,8 +343,14 @@
     .field input:focus { outline: none; border-color: var(--clay-2); box-shadow: 0 0 0 4px rgba(176,100,74,.14); }
     .booking-form.has-error input:invalid, .booking-form.has-error input:placeholder-shown { border-color: #c0563e; }
     .field-error { color: #c0563e; font-size: .88rem; }
-    .modal-hint { margin: 24px 0 12px; font-size: .92rem; color: var(--muted); }
-    .messengers { display: grid; gap: 10px; }
+    .submit-btn { width: 100%; margin-top: 6px; font-family: inherit; }
+    .submit-btn:disabled { opacity: .6; cursor: wait; transform: none; }
+    .booking-done { text-align: center; padding-top: 4px; }
+    .done-mark { width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 50%; background: var(--clay-2); display: grid; place-items: center; }
+    .done-mark svg { width: 30px; height: 30px; fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .done-title { font-family: var(--serif); font-size: 2rem; line-height: 1.1; }
+    .done-text { color: var(--muted); font-size: .95rem; margin: 10px 0 22px; }
+    .messengers { display: grid; gap: 10px; text-align: left; }
     .messenger {
       display: flex; align-items: center; gap: 14px; padding: 12px 16px; text-decoration: none; cursor: pointer;
       font-weight: 600; color: var(--text); background: #fff; border: 1.5px solid rgba(45,38,33,.12); border-radius: 16px;
@@ -512,7 +519,7 @@
         <p class="intro">На тренинге мы не будем «просто разговаривать». Мы будем проживать новый опыт через тело:</p>
         <ol>
           <li>Учиться замечать момент, когда вы уже начали соглашаться — и останавливать это.</li>
-          <li>Находить опору в теле, чтобы сказать «нет» без чувства вины.</li>
+          <li>Находить опору в теле, чтобы сказать «нет».</li>
           <li>Снимать телесные зажимы, которые возникают при отстаивании своих границ.</li>
         </ol>
       </div>
@@ -654,6 +661,7 @@
       <h2 id="modal-title">Забронировать место</h2>
       <p class="modal-sub">«Почему я соглашаюсь, когда не хочу» · <span class="js-price">4 500 ₽</span></p>
 
+      <!-- шаг 1: заявка -->
       <form class="booking-form" id="booking-form" novalidate>
         <label class="field">
           <span>Ваше имя</span>
@@ -668,15 +676,21 @@
           <input type="email" name="email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
         </label>
         <p class="field-error" id="form-error" hidden>Пожалуйста, заполните все поля корректно</p>
+        <button class="btn submit-btn" type="submit">Отправить заявку</button>
+        <p class="modal-legal">Нажимая «Отправить заявку», вы даёте <a href="privacy.html" target="_blank">согласие на обработку персональных данных</a> и принимаете условия <a href="offer.html" target="_blank">договора оферты</a>.</p>
       </form>
 
-      <p class="modal-hint">Заполните форму и выберите, где вам удобнее продолжить общение:</p>
-      <div class="messengers">
-        <a class="messenger" data-messenger="tg" target="_blank" rel="noopener noreferrer" hidden><img src="img/telegram.svg" alt="" width="36" height="36">Telegram</a>
-        <a class="messenger" data-messenger="vk" target="_blank" rel="noopener noreferrer" hidden><img src="img/vk-messenger.svg" alt="" width="36" height="36">ВКонтакте</a>
-        <a class="messenger" data-messenger="max" target="_blank" rel="noopener noreferrer" hidden><img src="img/max-logo.png" alt="" width="36" height="36">MAX</a>
+      <!-- шаг 2: заявка принята, можно написать в мессенджер (заявку повторно не отправляет) -->
+      <div class="booking-done" id="booking-done" hidden>
+        <div class="done-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        <p class="done-title">Заявка принята</p>
+        <p class="done-text">Катерина свяжется с вами, чтобы подтвердить место. Чтобы забронировать быстрее, напишите ей сами:</p>
+        <div class="messengers">
+          <a class="messenger" data-messenger="tg" target="_blank" rel="noopener noreferrer" hidden><img src="img/telegram.svg" alt="" width="36" height="36">Telegram</a>
+          <a class="messenger" data-messenger="vk" target="_blank" rel="noopener noreferrer" hidden><img src="img/vk-messenger.svg" alt="" width="36" height="36">ВКонтакте</a>
+          <a class="messenger" data-messenger="max" target="_blank" rel="noopener noreferrer" hidden><img src="img/max-logo.png" alt="" width="36" height="36">MAX</a>
+        </div>
       </div>
-      <p class="modal-legal">Оставляя заявку, вы даёте <a href="privacy.html" target="_blank">согласие на обработку персональных данных</a> и принимаете условия <a href="offer.html" target="_blank">договора оферты</a>.</p>
     </div>
   </div>
   <div class="toast" id="booking-toast" role="status" aria-live="polite" hidden></div>
@@ -724,7 +738,13 @@
 
     // ссылки на мессенджеры с готовым текстом сообщения
     const links = {};
-    if (booking.vk) links.vk = `https://vk.com/im?sel=${String(booking.vk).replace(/\D/g, "")}&msg=${encodeURIComponent(bookingMsg)}`;
+    if (booking.vk) {
+      // числовой id — чат с готовым текстом; короткое имя (например, katykeren) — чат через vk.me
+      const vk = String(booking.vk).trim().replace(/^https?:\/\/vk\.(com|ru)\//i, "").replace(/^@/, "");
+      links.vk = /^\d+$/.test(vk)
+        ? `https://vk.com/im?sel=${vk}&msg=${encodeURIComponent(bookingMsg)}`
+        : `https://vk.me/${vk}`;
+    }
     if (booking.tg) {
       const tg = String(booking.tg).trim();
       const base = /^https?:\/\//i.test(tg) ? tg.replace(/\/$/, "") : `https://t.me/${tg.replace(/^@/, "")}`;
@@ -741,7 +761,7 @@
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-      setTimeout(() => form.querySelector("input").focus(), 300);
+      if (!form.hidden) setTimeout(() => form.querySelector("input").focus(), 300);
     };
     const closeModal = () => {
       modal.classList.remove("open");
@@ -767,26 +787,64 @@
 
     // Заявка уходит в Google Apps Script через скрытый iframe: нативный POST работает во всех браузерах
     // и не упирается в CORS, а страница при этом не перезагружается.
-    const submitBooking = v => {
-      if (!FORM.endpoint) return;
-      let frame = document.querySelector("#booking-frame");
-      if (!frame) {
-        frame = document.createElement("iframe");
-        frame.name = frame.id = "booking-frame";
-        frame.setAttribute("aria-hidden", "true");
-        frame.style.cssText = "position:absolute;width:1px;height:1px;border:0;opacity:0;pointer-events:none";
-        document.body.appendChild(frame);
-      }
+    // Защита от дублей: заявка отправляется только кнопкой «Отправить заявку» (не мессенджерами),
+    // кнопка блокируется на время отправки, а повтор тех же телефона и почты в течение 12 часов не отправляется.
+    const done = document.querySelector("#booking-done");
+    const submitBtn = form.querySelector(".submit-btn");
+    const SENT_KEY = "booking-sent";
+    const SENT_TTL = 12 * 3600e3;
+    const signature = v => v.phone.replace(/\D/g, "").slice(-10) + "|" + v.email.toLowerCase();
+    const recentlySent = sig => {
+      try {
+        const s = JSON.parse(localStorage.getItem(SENT_KEY) || "null");
+        return s && s.sig === sig && Date.now() - s.at < SENT_TTL;
+      } catch { return false; }
+    };
+    const rememberSent = sig => { try { localStorage.setItem(SENT_KEY, JSON.stringify({ sig, at: Date.now() })); } catch {} };
+    const requestId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+
+    const frame = document.createElement("iframe");
+    frame.name = frame.id = "booking-frame";
+    frame.setAttribute("aria-hidden", "true");
+    frame.tabIndex = -1;
+    frame.style.cssText = "position:absolute;width:1px;height:1px;border:0;opacity:0;pointer-events:none";
+    document.body.appendChild(frame);
+
+    const submitBooking = v => new Promise(resolve => {
+      if (!FORM.endpoint) return resolve();
+      const finish = () => { clearTimeout(t); frame.removeEventListener("load", finish); resolve(); };
+      const t = setTimeout(finish, 6000);  // ответ не дошёл — всё равно не держим человека
+      frame.addEventListener("load", finish);
       const f = document.createElement("form");
       f.method = "POST"; f.action = FORM.endpoint; f.target = "booking-frame"; f.style.display = "none";
-      Object.entries({ ...v, subject: FORM.subject || "Заявка на тренинг" }).forEach(([k, val]) => {
+      Object.entries({ ...v, subject: FORM.subject || "Заявка на тренинг", request_id: requestId() }).forEach(([k, val]) => {
         const i = document.createElement("input");
         i.type = "hidden"; i.name = k; i.value = val; f.appendChild(i);
       });
       document.body.appendChild(f);
       f.submit();
-      setTimeout(() => f.remove(), 0);
+      f.remove();
+    });
+
+    const showDone = () => {
+      form.hidden = true;
+      done.hidden = false;
     };
+
+    let sending = false;
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      if (sending || !validate()) return;
+      const v = values();
+      const sig = signature(v);
+      if (recentlySent(sig)) { showDone(); return; }
+      sending = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Отправляем…";
+      rememberSent(sig);
+      try { await submitBooking(v); } catch {}
+      showDone();
+    });
 
     const copyMessage = async () => {
       try { await navigator.clipboard.writeText(bookingMsg); return true; }
@@ -800,18 +858,16 @@
     };
     const showToast = copied => {
       toast.textContent = copied
-        ? "Заявка отправлена. Текст скопирован — вставьте его в чат и отправьте"
-        : "Заявка отправлена. Напишите в чат: «Здравствуйте, хочу записаться на тренинг…»";
+        ? "Текст скопирован — вставьте его в чат и отправьте"
+        : "Напишите в чат: «Здравствуйте, хочу записаться на тренинг…»";
       toast.hidden = false;
       requestAnimationFrame(() => toast.classList.add("show"));
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => { toast.classList.remove("show"); setTimeout(() => toast.hidden = true, 300); }, 5000);
     };
 
-    // ссылка открывается в новой вкладке (без preventDefault), поэтому заявка успевает уйти
-    document.querySelectorAll("[data-messenger]").forEach(a => a.addEventListener("click", e => {
-      if (!validate()) { e.preventDefault(); return; }
-      try { submitBooking(values()); } catch {}
+    // мессенджеры только открывают чат и копируют текст — заявку они не отправляют
+    document.querySelectorAll("[data-messenger]").forEach(a => a.addEventListener("click", () => {
       copyMessage().then(copied => { closeModal(); showToast(copied); });
     }));
 
